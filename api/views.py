@@ -12,6 +12,9 @@ from rest_framework import mixins,generics,viewsets
 from blogs.models import Blog,Comment
 from blogs.serializers import BlogSerializer,CommentSerializer
 from .paginations import CustomPagination
+from django_filters.rest_framework import DjangoFilterBackend
+from employees.filters import EmployeeFilter
+from rest_framework.filters import SearchFilter,OrderingFilter
 
 
 
@@ -173,11 +176,15 @@ class EmployeeViewset(viewsets.ModelViewSet):
     queryset=Employee.objects.all()
     serializer_class=EmployeeSerializer
     pagination_class=CustomPagination
+    filterset_class= EmployeeFilter
     
     
 class BlogsView(generics.ListCreateAPIView):
     queryset=Blog.objects.all()
     serializer_class=BlogSerializer
+    filter_backends=[SearchFilter,OrderingFilter]
+    search_fields=['blog_title','blog_body']
+    ordering_fields=['id','blog_title']
     
 class CommentsView(generics.ListCreateAPIView):
     queryset=Comment.objects.all()

@@ -14,3 +14,5 @@ class EmployeeSerializer(serializers.ModelSerializer):
         model=Employee
         fields ="__all__"
     
+    
+    
