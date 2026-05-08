@@ -15,6 +15,8 @@ from .paginations import CustomPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from employees.filters import EmployeeFilter
 from rest_framework.filters import SearchFilter,OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 
 
@@ -173,11 +175,19 @@ class EmployeeDetail(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.De
 
 
 class EmployeeViewset(viewsets.ModelViewSet):
-    queryset=Employee.objects.all()
-    serializer_class=EmployeeSerializer
-    pagination_class=CustomPagination
-    filterset_class= EmployeeFilter
-    
+    # queryset=Employee.objects.all()
+    # serializer_class=EmployeeSerializer
+    #pagination_class=CustomPagination
+    # filterset_class= EmployeeFilter
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+    pagination_class = CustomPagination
+
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+
+    filterset_fields = ['designation']
+    search_fields = ['emp_name']
+    ordering_fields = ['id']
     
 class BlogsView(generics.ListCreateAPIView):
     queryset=Blog.objects.all()

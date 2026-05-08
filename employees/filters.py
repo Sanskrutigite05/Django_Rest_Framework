@@ -20,5 +20,5 @@ class EmployeeFilter(django_filters.FilterSet):
             return queryset.filter(emp_id__gte=value)
         elif name == 'id_max':
             return queryset.filter(emp_id__lte=value)
-        
+        return queryset
         
